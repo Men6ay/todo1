@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <div class="page-content page-container" id="page-content">
+        <div class="padding">
+            <div class="row container d-flex justify-content-center">
+                <div class="col-md-12">
+                    <div class="card px-3">
+                        <div class="card-body">
+                            <h4 class="card-title">Todo List</h4>
+                            <form method="post" action="{% url 'create' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="container">
+                                    <div class="mb-3">
+                                        <label for="formGroupExampleInput" class="form-label">ToDo</label>
+                                        <input type="text" name="title" class="form-control" id="formGroupExampleInput"
+                                               placeholder="Example input placeholder">
+                                    </div>
+                                    <div class="container">
+                                        <button class="btn btn-primary active" type="submit">Create</button>
+                                    </div>
+                                </div>
+                            </form>
+                            {% for todo in todos %}  
+                            <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"><p href="{% url 'index' %}">{{ todo.title }}<i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i></li>
+                                <div class = 'container'>
+                                    <a href = "{% url 'update' todo.id %}"class="btn btn-primary active" type="submit">Update</a>
+                                    <form method="post" action="{% url 'delete' todo.id %}">
+                                        {% csrf_token %}
+                                        <button class = 'btn btn-danger' type ='submit'>Delete</button>
+                                    </form>
+                                </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
